@@ -1,5 +1,6 @@
 ##
 ## Intro to Network Types and Concepts
+## https://www.linkedin.com/in/kyledavisln/
 ##
 
 # Packages used:
@@ -11,8 +12,8 @@ set.seed(8675309)
 
 # Manually entering Network Data/ viewing networks -----------------------------
 
+# Edge-Lists
 # Entering Edge-List data manually (works fine for now).
-# ?graph()
 g1 <- graph(edges=c(1,2,
                     1,3,
                     2,4,
@@ -22,12 +23,12 @@ g1 <- graph(edges=c(1,2,
                     4,3))
 # Let's view this:
 g1
+
 # So, Directional network, 5 nodes, 7 edges.
 # Or more briefly:
 summary(g1)
 # Or using the default plot() function:
 plot(g1)
-
 
 # Another Edge-List dataset with names instead of numbers:
 g2 <- graph(edges=c("Anand","Beth",
@@ -65,15 +66,20 @@ V(g2)$name
 
 # So let's plug in more data on top of that:
 V(g2)$gender <- c("M","F","M","M","F","M","F") # Here, we're assigning the gender for each vertex.
+V(g2)$gender
 
-# Or we'll assign some arbitrary weights to the edges (notice the E(g2) now.)
-E(g2)$count <- rep(1:2,5)
 g2 <- set.vertex.attribute(g2, "age", value = c(20,26,19,34,22,30,21))
 # Because we want R to save this addition to the network, when using the
 #  set.vertex.attribute() function, we have to assign this again to the graph name (g2).
+V(g2)$age
+
+
+# Or we'll assign some arbitrary weights to the edges (notice the E(g2) now.)
+E(g2)$count <- rep(1:2,5)
+E(g2)$count
 
 # With this new data added, let's summarize the graph:
-summary(g2) # We see the new variables added, and how they are relevantly connected.
+summary(g2) # We see the new variables added.
 
 ## Larger data -----------------------------------------------------------------
 
@@ -109,6 +115,8 @@ ecount(karate) # Edge count
 
 ?degree() # a summation of all edges linked to nodes.
 # or, (undirected) - 2E/N;  (directed) E/N
+
+
 mean(degree(karate)) # Average network degree
 # [1] 4.588235      # "on average" we have 4.5 connections in the karate club
 
@@ -138,7 +146,7 @@ plot(karate,
 # This is where you have the relationship between nodes be that they are connected
 #   to another party. (I worked with Jim, and so did you, so we're connected)
 
-# Seminar notes on this:
+# Load data:
 mem <- matrix(data = c(1,1,1,1,0,
                       0,1,1,0,0,
                       0,0,0,1,1),
@@ -148,66 +156,33 @@ mem <- matrix(data = c(1,1,1,1,0,
 dimnames(mem) <- list(c("Group1","Group2","Group3"),
                       c("Y1","Y2","Y3","Y4","Y5"))
 mem
-##        Y1 Y2 Y3 Y4 Y5
-## Group1  1  1  1  1  0
-## Group2  0  1  1  0  0
-## Group3  0  0  0  1  1
 
 bg <- graph.incidence(mem)
 bg  # We see the "B" there now, for Bipartide
-## IGRAPH 6d6e710 UN-B 8 8 --
-## + attr: type (v/l), name (v/c)
-## + edges from 6d6e710 (vertex names):
-## [1] Group1--Y1 Group1--Y2 Group1--Y3 Group1--Y4 Group2--Y2 Group2--Y3
-## [7] Group3--Y4 Group3--Y5
+
 plot(bg)
 
+# Can project this to get your two network objects: group and individual
 pr <- bipartite.projection(bg)
 pr
-## $proj1
-## IGRAPH 749b7be UNW- 3 2 --
-## + attr: name (v/c), weight (e/n)
-## + edges from 749b7be (vertex names):
-## [1] Group1--Group2 Group1--Group3
-##
-## $proj2
-## IGRAPH fbde6d7 UNW- 5 7 --
-## + attr: name (v/c), weight (e/n)
-## + edges from fbde6d7 (vertex names):
-## [1] Y1--Y2 Y1--Y3 Y1--Y4 Y2--Y3 Y2--Y4 Y3--Y4 Y4--Y5
+
 plot(pr$proj1, edge.width = E(pr$proj1)$weight)
 plot(pr$proj2, edge.width = E(pr$proj2)$weight)
 
-
+# Can get adjancency matrix for these if we need:
 get.adjacency(pr$proj1, sparse = FALSE, attr = "weight")
-##        Group1 Group2 Group3
-## Group1      0      2      1
-## Group2      2      0      0
-## Group3      1      0      0
 get.adjacency(pr$proj2, sparse = FALSE, attr = "weight")
-##    Y1 Y2 Y3 Y4 Y5
-## Y1  0  1  1  1  0
-## Y2  1  0  2  1  0
-## Y3  1  2  0  1  0
-## Y4  1  1  1  0  1
-## Y5  0  0  0  1  0
 
 
+# Mathematically what is this doing?
 aff1 <- mem %*% t(mem)
 diag(aff1) <- 0
 # the diagonal doesn't really have important information for these,
 #   as it's about self-affiliation. So, with this command, we change those values to 0.
 aff1
-##        Group1 Group2 Group3
-## Group1      0      2      1
-## Group2      2      0      0
-## Group3      1      0      0
+
+# for the other graph:
 aff2 <- t(mem) %*% mem
 diag(aff2) <- 0
 aff2
-##    Y1 Y2 Y3 Y4 Y5
-## Y1  0  1  1  1  0
-## Y2  1  0  2  1  0
-## Y3  1  2  0  1  0
-## Y4  1  1  1  0  1
-## Y5  0  0  0  1  0
+
