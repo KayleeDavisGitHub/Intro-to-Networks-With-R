@@ -174,3 +174,14 @@ legend("topright", legend=7:12, pch=19, col=categorical_pal(8)[c(7,8,1,2,3,4)])
 
 # Centrality is a very important metric, and often the cornerstone of most social science.
 #  Think about what actions school admins could make with this data, or any other data!
+
+Grade <- as.factor(V(dixon)$grade)
+
+library(ggplot2) #I'm just using qplot here to force our graph a bit more
+qplot(in_degree_vector, out_degree_vector, color=Grade)+
+        facet_grid(~ as.factor(V(dixon)$race)) +
+        geom_smooth(method = "lm")+
+        theme_bw()
+
+# Super quick graph, I know, but basically it reads that no matter the race
+# we find that all grade groups have healthy in/outward degree centrality.
