@@ -9,3 +9,15 @@ This script goes through the different network structures, how to load in and re
 
 2- Centrality
 This script goes through how to measure centrality in multiple different ways, and what some of the measures mean - and plotting based upon centrality measures.
+
+3- Nodes
+Includes properties on nodes, structural equivilance, roles, and positions.
+
+4- Diad/Triad
+This includes calculations and interpretations of diads and triads and when they might be useful in calculations (a lead in to community detection).
+
+5- Community
+This includes assortativity and community structure detection and graphing.
+
+6- Models
+This lecture only briefly covers basic network modeling and statistical interpretation.
