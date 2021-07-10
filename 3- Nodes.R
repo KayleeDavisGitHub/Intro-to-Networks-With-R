@@ -1,15 +1,11 @@
 ##
-##   Session 4:  Properties of Nodes, Structural Equivalence, Roles, Positions
-##                   (this ramps up the difficulty quite a bit)
+##    Properties of Nodes, Structural Equivalence, Roles, Positions
+##            (this ramps up the difficulty quite a bit)
 
 set.seed(123)
 
-# Let's try something fancy:
 # List all packages:
 packages <- c("NetCluster", "blockmodeling", "gplots", "igraph")
-
-# Install all packages in one function:
-#   lapply(packages, install.packages, character.only = TRUE)
 
 # Load all packages in one function:
 lapply(packages, library, character.only = TRUE)
@@ -44,7 +40,6 @@ plot(swpr$proj2, # Note two proj's we get from that projection, via X or Y proje
 cor(swi) # Correlation of our matrix object to see structural position relationship. -1 : 1 (weights)
 # Note that Flora and Oliva are structurally similar here and elsewhere
 
-
 #  Going beyond Pearson correlation to see structural simularity:
 # dissimularity measure (-1 to cor).
 as.dist(1-cor(swi), upper=TRUE) # Upper = T just prints both sides of diag. Doesn't effect analysis
@@ -78,7 +73,6 @@ plot(swpr$proj2, edge.width=E(swpr$proj2)$weight, vertex.color=cutree(swdend, k=
 
 
 ## Let's do the same analysis for a one-mode network.
-
 # Let's just ignore this package and data coding here for now... Copy and Pasted
 library(ergm)
 data("florentine")
@@ -113,6 +107,3 @@ plot(flo_dend)
 ## With gplots
 heatmap.2(as.matrix(flo_dist),trace="none",revC=TRUE)
 plot(flo_m,vertex.color=cutree(flo_dend, k=4))
-
-# lots of explaination and data reading in the seminar notes from the course!
-#   Revisit it there if there are any questions it's very well documented.
