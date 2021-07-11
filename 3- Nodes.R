@@ -1,6 +1,6 @@
 ##
 ##    Properties of Nodes, Structural Equivalence, Roles, Positions
-##            (this ramps up the difficulty quite a bit)
+##
 
 set.seed(123)
 
@@ -11,24 +11,22 @@ packages <- c("NetCluster", "blockmodeling", "gplots", "igraph")
 lapply(packages, library, character.only = TRUE)
 #  lapply(object, function, ...)  # For "list" apply... nifty tool!
 
-# swi <- read.csv("swn.csv", header = TRUE, row.names = 1)
-# header = TRUE uses the first row as the column names;
-#  row.names = 1 uses the first column as the row names
-#    (if we put row.names = 2, it would use the second column, etc.)
+davis <- read.csv("swi.csv") # There is a version with node names, I can no longer find it sadly...
 
 ## I couldn't find the .csv... so I just took the data from the source
-# https://networkdata.ics.uci.edu/netdata/html/davis.html
+# https://networkdata.ics.uci.edu/netdata/html/davis.html     or:
+# http://www.casos.cs.cmu.edu/computational_tools/datasets/sets/davis/
 #  and hit "download" - open that r.data with Rstudio and it'll put it in your global env.
 
 plot(davis) # just checking
 swi <- as.matrix(davis) # Make incidence matrix - and put as igraph network
 swn <- graph.incidence(swi) # This specifically makes a bipartite igraph from a matrix.
-swn # UN-B ; 32 89
+swn # UN-B ; 32 98
 plot(swn)
 
 swpr <- bipartite.projection(swn) # This makes the graph two one-mode networks
 # What is this? - instead of just 1:1 node relationships there are two overlapping networks
-#  and the realtionships we care about are between people of the other network.
+#  and the relationships we care about are between people of the other network.
 #   so now our edges are weighted, and igraph strangely calls this a nonbipartite graph? Why?
 #     Well now we don't really have one anymore! Instead we transfered the bipartide relationship
 #     To a weighted relationship using that projection function. - Weights are number of shared
@@ -38,7 +36,8 @@ swpr <- bipartite.projection(swn) # This makes the graph two one-mode networks
 plot(swpr$proj2, # Note two proj's we get from that projection, via X or Y projection weights
      edge.width = E(swpr$proj2)$weight)
 cor(swi) # Correlation of our matrix object to see structural position relationship. -1 : 1 (weights)
-# Note that Flora and Oliva are structurally similar here and elsewhere
+# What nodes look structurally similar here?
+
 
 #  Going beyond Pearson correlation to see structural simularity:
 # dissimularity measure (-1 to cor).
