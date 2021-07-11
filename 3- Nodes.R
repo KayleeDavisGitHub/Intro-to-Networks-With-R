@@ -15,7 +15,8 @@ davis <- read.csv("swi.csv") # There is a version with node names, I can no long
 
 ## I couldn't find the .csv... so I just took the data from the source
 # https://networkdata.ics.uci.edu/netdata/html/davis.html     or:
-# http://www.casos.cs.cmu.edu/computational_tools/datasets/sets/davis/
+# http://www.casos.cs.cmu.edu/computational_tools/datasets/sets/davis/   (this may populate a row of NA's)
+# Or saved on my github for your convenience.
 #  and hit "download" - open that r.data with Rstudio and it'll put it in your global env.
 
 plot(davis) # just checking
@@ -39,8 +40,8 @@ cor(swi) # Correlation of our matrix object to see structural position relations
 # What nodes look structurally similar here?
 
 
-#  Going beyond Pearson correlation to see structural simularity:
-# dissimularity measure (-1 to cor).
+#  Going beyond Pearson correlation to see structural similarity:
+# dissimilarity measure (-1 to cor).
 as.dist(1-cor(swi), upper=TRUE) # Upper = T just prints both sides of diag. Doesn't effect analysis
 # We want to move away from just comparing two individuals, but instead find entire clusters
 #  of attendants that exibit similar behavior. And then be able to analyize that more interesting
@@ -68,7 +69,9 @@ cutree(swdend, k=2) # here we are telling R where we should cut our clusters at.
 #  tell you where to cut your clusters.
 
 # So we identified two groups. Let's graph each of these to show our new network:
-plot(swpr$proj2, edge.width=E(swpr$proj2)$weight, vertex.color=cutree(swdend, k=2))
+plot(swpr$proj2,
+     edge.width = E(swpr$proj2)$weight,
+     vertex.color = cutree(swdend, k=2))
 
 
 ## Let's do the same analysis for a one-mode network.

@@ -2,9 +2,7 @@
 ##   Assortativity and Community Structure
 ##
 
-# Let's expand on the homopholy measurements from Session_5.R
 # We'll use Zachary's karate club data again:
-
 library(igraph)
 library(igraphdata)
 library(ape)
