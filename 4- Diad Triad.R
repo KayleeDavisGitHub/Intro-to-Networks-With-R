@@ -10,7 +10,6 @@ require(intergraph)
 require(igraph)
 dixon <- asIgraph(faux.dixon.high)
 
-
 # Network Basics:
 summary(dixon)
 
@@ -58,7 +57,6 @@ sum(dam*t(dam))/sum(dam) # Using adjacency matrix
 # 37% chance that if Student A names Student B as their friend; Student B will have also named A.
 #    More generally, we can say that 37% of edges are reciprocated.
 
-
 # Or we can use an alternative reciprocity calculation:
 reciprocity(dixon, mode="ratio")
 dyad.census(dixon)$mut/(dyad.census(dixon)$mut + dyad.census(dixon)$asym)
@@ -70,7 +68,6 @@ assortativity.nominal(dixon,V(dixon)$sex)
 assortativity.nominal(dixon,factor(V(dixon)$race)) # Had to factorize race here
 # .nominal is giving us group-wise assortativity, without that it would treat as continuous.
 # postive number means more assortment (sorting) into like groups with the variable than non-variable.
-
 
 
 ## Triads
@@ -85,7 +82,6 @@ summary(rand)
 transitivity(rand)
 
 
-
 # Triad Census:
 ?triad.census() # This help page defines most of the below information:
 
@@ -96,19 +92,15 @@ triad.census(dixon)
 
 df <- data.frame(census_labels, triad.census(dixon))
 ## binding the two labels with the output will let us actually interpret this!
-#
 # So most common are unconnected triads, then triads with only one asymmetric edge...
 
 triad.census(rand)
-
-
 
 
 # Manual exploration of triad census and transitivitiy:
 ##  Notes:
 y <- sum(triad.census(dixon)[4:16, ])
 x <- sum(triad.census(dixon)[1:3, ])
-
 
 
 y <-  2280642 + 172313 + 49433

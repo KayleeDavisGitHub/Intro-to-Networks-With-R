@@ -137,8 +137,6 @@ sg <- cluster_spinglass(karate, weights=E(karate)$weight)
 plot(sg, karate, edge.width = E(karate)$weight, layout = frlay)
 
 
-
-
 ### Which one do I use?!
 #     often the "big picture" is the same, but often we'll find small changes between methods.
 #     When publishing, it can be better to publish many different methods in a table or easily reportable
@@ -173,27 +171,17 @@ compare(V(karate)$Faction, im, method = "nmi")
 ## [1] 0.8255182
 compare(V(karate)$Faction, sg, method = "nmi")
 ## [1] 0.6543404
-table(V(karate)$Faction, membership(eb))
-##
-##      1  2
-##   1 16  0
-##   2  1 17
-table(V(karate)$Faction, membership(fg))
-##
-##      1  2  3
-##   1  0 11  5
-##   2 18  0  0
-table(V(karate)$Faction, membership(im))
-##
-##      1  2  3
-##   1  0 11  5
-##   2 18  0  0
 
+# Table of membership:
+table(V(karate)$Faction, membership(eb))
+
+table(V(karate)$Faction, membership(fg))
+
+table(V(karate)$Faction, membership(im))
 
 #  So if our theory is strong in that these factions matter:
 #     we see that edge betweenness does "best" with only one person assigned wrong faction.
 #     with fast_greedy and infomap coming close behind in faction membership detection.
-
 
 ## we can also compare different partitionings based on different community detection algorithms.
 compare(eb, sg, method = "nmi")
@@ -204,18 +192,10 @@ compare(fg, im, method = "nmi")
 ## we can see that these two community detection algorithms produce exactly the same partitioning of the graph
 ## [1] 1
 table(membership(fg),membership(im))
-##
-##      1  2  3
-##   1 18  0  0
-##   2  0 11  0
-##   3  0  0  5
-
-
 
 ## Stochastic Block Models.
 #    Just create a model to calculate the probablity of ties within each group (controlling for variables).
 #    (Have to swap packages out of igraph and data out of igraph)
-
 require(intergraph)
 detach(package:igraph)
 require(sna)
