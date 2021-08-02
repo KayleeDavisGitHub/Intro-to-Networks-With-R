@@ -19,7 +19,6 @@ davis <- read.csv("swi.csv") # There is a version with node names, I can no long
 # Or saved on my github for your convenience.
 #  and hit "download" - open that r.data with Rstudio and it'll put it in your global env.
 
-plot(davis) # just checking
 swi <- as.matrix(davis) # Make incidence matrix - and put as igraph network
 swn <- graph.incidence(swi) # This specifically makes a bipartite igraph from a matrix.
 swn # UN-B ; 32 98
@@ -44,8 +43,8 @@ cor(swi) # Correlation of our matrix object to see structural position relations
 # dissimilarity measure (-1 to cor).
 as.dist(1-cor(swi), upper=TRUE) # Upper = T just prints both sides of diag. Doesn't effect analysis
 # We want to move away from just comparing two individuals, but instead find entire clusters
-#  of attendants that exibit similar behavior. And then be able to analyize that more interesting
-#  result. But to do this, we have to find how nodes are disimilar, so this data is more
+#  of attendants that exibit similar behavior. And then be able to analyze that more interesting
+#  result. But to do this, we have to find how nodes are dissimilar, so this data is more
 #  valuable to find these clusters! Note we have a wider range now because with the -1
 #  we could have a 1 - a negative -1, or 1+1 (1- -1).
 
@@ -53,9 +52,9 @@ swdend <- hclust(as.dist(1-cor(swi))) # Standard clustering tool
 plot(swdend) # So how do we read this Dendrogram?
 # Height is our value, and as we parse that value down, it's grouped into values.
 #  Similar values become grouped under other values.
-#  So, read from the top down, initial seperation was around the 1.0 mark, developing two
+#  So, read from the top down, initial separation was around the 1.0 mark, developing two
 #  clusters, which have unique values apart from one another. as more and more nodes find
-#  simularity. For more:
+#  similarity. For more:
 #  https://www.displayr.com/what-is-dendrogram/#:~:text=How%20to%20read%20a%20dendrogram,objects%20are%20A%20and%20B.
 
 

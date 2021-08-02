@@ -36,17 +36,17 @@ reciprocity(dixon) # We can calculate this via dyad census (above) or through ad
 
 # Dyad Census:
 2*dyad_census(dixon)$mut/ecount(dixon)
-# two times the mutual count to control for the directionality of edges (which we use as denominator
+# two times the mutual count to control for the directionality of edges (which we use as denominator)
 
 
 # Using the adjacency matrix
 dam <- as.matrix(get.adjacency(dixon))
 
 sum(dam %*% t(dam)) # [I've added matrix multiplier here for a teaching moment if needed]
-## Element-wise multiplation of the adjacency matrix, giving us the full number of mutual edges
+## Element-wise multiplication of the adjacency matrix, giving us the full number of mutual edges
 #    (equivalent to 2*dyad_census(dixon)$mut.)
 
-sum(dam) ## The count of the total number of edges in the network (equivlaent to ecount(dixon).)
+sum(dam) ## The count of the total number of edges in the network (equivalent to ecount(dixon).)
 
 sum(dam*t(dam))/sum(dam)
 
@@ -67,7 +67,7 @@ assortativity.nominal(dixon,V(dixon)$grade)
 assortativity.nominal(dixon,V(dixon)$sex)
 assortativity.nominal(dixon,factor(V(dixon)$race)) # Had to factorize race here
 # .nominal is giving us group-wise assortativity, without that it would treat as continuous.
-# postive number means more assortment (sorting) into like groups with the variable than non-variable.
+# positive number means more assortment (sorting) into like groups with the variable than non-variable.
 
 
 ## Triads
@@ -95,18 +95,3 @@ df <- data.frame(census_labels, triad.census(dixon))
 # So most common are unconnected triads, then triads with only one asymmetric edge...
 
 triad.census(rand)
-
-
-# Manual exploration of triad census and transitivitiy:
-##  Notes:
-y <- sum(triad.census(dixon)[4:16, ])
-x <- sum(triad.census(dixon)[1:3, ])
-
-
-y <-  2280642 + 172313 + 49433
-x <- sum(1400,1113,2576,1396,1611,163,22,386,73,92,98,135,43)
-x/y
-
-
-?transitivity()
-transitivity(dixon, isolates = "NaN")
