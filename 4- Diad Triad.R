@@ -32,6 +32,8 @@ legend("topright",
 
 dyad.census(dixon) # Note the $ indicator for each object.
 
+
+# function form:
 reciprocity(dixon) # We can calculate this via dyad census (above) or through adjacency matrix.
 
 # Dyad Census:
@@ -39,10 +41,10 @@ reciprocity(dixon) # We can calculate this via dyad census (above) or through ad
 # two times the mutual count to control for the directionality of edges (which we use as denominator)
 
 
-# Using the adjacency matrix
+# Adjacency matrix calculation:
 dam <- as.matrix(get.adjacency(dixon))
 
-sum(dam %*% t(dam)) # [I've added matrix multiplier here for a teaching moment if needed]
+sum(dam*t(dam)) # note no matrix multiplication
 ## Element-wise multiplication of the adjacency matrix, giving us the full number of mutual edges
 #    (equivalent to 2*dyad_census(dixon)$mut.)
 
@@ -91,6 +93,7 @@ census_labels <- c('003','012','102','021D','021U','021C','111D','111U',
 triad.census(dixon)
 
 df <- data.frame(census_labels, triad.census(dixon))
+View(df)
 ## binding the two labels with the output will let us actually interpret this!
 # So most common are unconnected triads, then triads with only one asymmetric edge...
 
