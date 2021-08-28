@@ -44,7 +44,7 @@ reciprocity(dixon) # We can calculate this via dyad census (above) or through ad
 # Adjacency matrix calculation:
 dam <- as.matrix(get.adjacency(dixon))
 
-sum(dam*t(dam)) # note no matrix multiplication
+sum(dam * t(dam)) # note no matrix multiplication
 ## Element-wise multiplication of the adjacency matrix, giving us the full number of mutual edges
 #    (equivalent to 2*dyad_census(dixon)$mut.)
 

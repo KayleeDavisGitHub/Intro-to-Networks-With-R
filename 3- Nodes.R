@@ -91,14 +91,14 @@ V(flo_b)$name <- V(flo_b)$vertex.names
 
 # Stacking our adjacency matricies on top of one another by row bind (rbind())
 #  Why? To consider multiple relationship types at the same time.
-flo_both <- rbind(as.matrix(get.adjacency(flo_m,names=TRUE)),
-                  as.matrix(get.adjacency(flo_b,names=TRUE)))
+flo_both <- rbind(as.matrix(get.adjacency(flo_m, names=TRUE)),
+                  as.matrix(get.adjacency(flo_b, names=TRUE)))
 
 flo_dist <- as.dist(1-cor(flo_both))
 ## Warning in cor(flo_both): the standard deviation is zero
 flo_dist
 
-flo_dist[is.na(flo_dist)==TRUE]<-2 # Fixes NA error by reassigning to number 2
+flo_dist[is.na(flo_dist)==TRUE] <- 2 # Fixes NA error by reassigning to number 2
 
 ## With NetCluster
 flo_dend <- hclust(flo_dist)
@@ -106,5 +106,5 @@ plot(flo_dend)
 
 
 ## With gplots
-heatmap.2(as.matrix(flo_dist),trace="none",revC=TRUE)
+heatmap.2(as.matrix(flo_dist), trace="none", revC=TRUE)
 plot(flo_m,vertex.color=cutree(flo_dend, k=4))
