@@ -1,3 +1,6 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+
 # Intro-to-Networks-With-R
 For developing a training course on network studies in R
 
